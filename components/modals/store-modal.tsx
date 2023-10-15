@@ -1,26 +1,53 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../ui/Modal";
 import { userStoreModal } from "@/hooks/useStore-modal";
-import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
 
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import toast from "react-hot-toast";
 
+//zod schemas
 const formSchema = z.object({
   name: z.string().min(1, "Name is required"),
 });
+//zod schemas ends here
 const StoreModal = () => {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
     },
   });
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      setLoading(true);
+      const response = await fetch("api/stores", {
+        method: "POST",
+        headers: {
+          ContentType: "application/json",
+        },
+        body: JSON.stringify(values),
+      }).then((res) => res.json());
+      toast.success("Store created successfully");
+    } catch (error: any) {
+      toast.error(error.message);
+      console.log(`[store-modal-onSubmit]`, error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const isOpen = userStoreModal((state) => state.isOpen);
   const onClose = userStoreModal((state) => state.onClose);
   return (
@@ -39,18 +66,24 @@ const StoreModal = () => {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Jannati</FormLabel>
+                    <FormLabel>Enter your store name</FormLabel>
 
-                    <Input {...field} placeholder="Store Name" />
-                    <FormMessage/>
+                    <Input
+                      disabled={loading}
+                      {...field}
+                      placeholder="Store Name"
+                    />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
               <div className="pt-6 space-x-2 flex items-center justify-end">
-                <Button variant="outline" onClick={onClose}>
+                <Button disabled={loading} variant="outline" onClick={onClose}>
                   Cancel
                 </Button>
-                <Button type="submit">Continue</Button>
+                <Button disabled={loading} type="submit">
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>
