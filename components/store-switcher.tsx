@@ -29,7 +29,7 @@ type PopoverTriggerProps = React.ComponentPropsWithoutRef<
 interface StoreSwitcherProps extends PopoverTriggerProps {
   items: Store[];
 }
-const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
+const StoreSwitcher = ({ className, items }: StoreSwitcherProps) => {
   const [open, setOpen] = useState(false);
   const storeModal = userStoreModal();
   const params = useParams();
@@ -57,7 +57,7 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
           aria-label="Select a Store"
         >
           <StoreIcon className="mr-2 h-4 w-4" />
-          Selected Store
+          {currentStore?.label || "Select a store"}
           <ChevronsUpDown className="w-4 h-4 shrink-0 opacity-80" />
         </Button>
       </PopoverTrigger>
