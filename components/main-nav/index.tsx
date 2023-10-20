@@ -16,13 +16,20 @@ const MainNav = ({
       isActive: pathName === `/${params.storeId}`,
     },
     {
+      href: `/${params.storeId}/billboards`,
+      label: "Billboards",
+      isActive: pathName === `/${params.storeId}/billboards`,
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: "Settings",
       isActive: pathName === `/${params.storeId}/settings`,
     },
   ];
   return (
-    <nav className={cn("flex items-center space-x-4 lg:space-x-6 pl-5", className)}>
+    <nav
+      className={cn("flex items-center space-x-4 lg:space-x-6 pl-5", className)}
+    >
       {routes.map((route) => (
         <Link
           href={route.href}
