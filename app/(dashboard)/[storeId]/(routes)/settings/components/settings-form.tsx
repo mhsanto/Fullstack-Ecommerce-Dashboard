@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useParams, useRouter } from "next/navigation";
+import AlertModal from "@/components/modals/alert-model";
 const formSchema = z.object({
   name: z.string().min(3).max(255),
 });
@@ -28,14 +31,54 @@ interface SettingsFormProps {
 const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const params = useParams();
+  const router = useRouter();
   const form = useForm<SettingFormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
   });
-  const onSubmit = async (data: SettingFormValues) => [console.log(data)];
+  const onSubmit = async (data: SettingFormValues) => {
+    try {
+      setLoading(true);
+      await fetch(`/api/stores/${params.storeId}`, {
+        method: "PATCH",
+        body: JSON.stringify(data),
+      });
+      router.refresh();
+      toast.success("Store updated successfully");
+    } catch (error: any) {
+      toast.error(error.message);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //delete store
+  const onDelete = async () => {
+    try {
+      setLoading(true);
+      await fetch(`/api/stores/${params.storeId}`, {
+        method: "DELETE",
+      });
+      router.refresh();
+      router.push("/");
+      toast.success("Store deleted successfully");
+    } catch (error) {
+      toast.error("Make sure you have deleted all the products and orders");
+    } finally {
+      setOpen(false);
+      setLoading(false);
+    }
+  };
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Manage Store preferences" />
         <Button
