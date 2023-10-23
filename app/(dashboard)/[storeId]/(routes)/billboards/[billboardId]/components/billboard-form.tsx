@@ -20,8 +20,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/alert-model";
-import ApiAlert from "@/components/ui/api-alert";
-import useOrigin from "@/hooks/useOrigin";
 import ImageUpload from "@/components/ui/image-upload";
 //zod schema validation
 const formSchema = z.object({
@@ -38,7 +36,6 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
   const [loading, setLoading] = useState(false);
   const params = useParams();
   const router = useRouter();
-  const origin = useOrigin();
   const title = initialData ? "Edit Billboard" : "New Billboard";
   const description = initialData ? "Edit Billboard" : "New Billboard";
   const toastMessage = initialData ? "Billboard Updated" : "Billboard created";
