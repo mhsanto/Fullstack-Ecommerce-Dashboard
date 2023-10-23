@@ -22,6 +22,7 @@ import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/alert-model";
 import ApiAlert from "@/components/ui/api-alert";
 import useOrigin from "@/hooks/useOrigin";
+import ImageUpload from "@/components/ui/image-upload";
 //zod schema validation
 const formSchema = z.object({
   label: z.string().min(3).max(255),
@@ -53,12 +54,20 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
   const onSubmit = async (data: BillboardFormValues) => {
     try {
       setLoading(true);
-      await fetch(`/api/stores/${params.storeId}`, {
-        method: "PATCH",
+      if (initialData) {
+        await fetch(`/api/${params.storeId}/billboards/${params.billboadId}`, {
+          method: "PATCH",
+          body: JSON.stringify(data),
+        });
+      }
+
+      await fetch(`/api/${params.storeId}/billboards`, {
+        method: "POST",
         body: JSON.stringify(data),
       });
       router.refresh();
-      toast.success("Store updated successfully");
+      router.push(`${params.storeId}/billboards`);
+      toast.success(toastMessage);
     } catch (error: any) {
       toast.error(error.message);
       setLoading(false);
@@ -71,14 +80,16 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
   const onDelete = async () => {
     try {
       setLoading(true);
-      await fetch(`/api/stores/${params.storeId}`, {
+      await fetch(`/api/${params.storeId}/billboards/${params.billboardId}`, {
         method: "DELETE",
       });
       router.refresh();
       router.push("/");
-      toast.success("Store deleted successfully");
+      toast.success("Billboard deleted successfully");
     } catch (error) {
-      toast.error("Make sure you have deleted all the products and orders");
+      toast.error(
+        "Make sure you have deleted all the categories using this billboard first"
+      );
     } finally {
       setOpen(false);
       setLoading(false);
@@ -111,6 +122,24 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
+          <FormField
+            control={form.control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background Image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={loading}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="grid grid-cols-3 gap-8">
             <FormField
               control={form.control}
