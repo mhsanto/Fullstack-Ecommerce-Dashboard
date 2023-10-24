@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 import { BillboardColumns } from "./columns";
 import {
@@ -12,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Copy, Edit, MoreHorizontal, Trash } from "lucide-react";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
-import { useState } from "react";
 import AlertModal from "@/components/modals/alert-model";
 interface CellActionProps {
   data: BillboardColumns;
