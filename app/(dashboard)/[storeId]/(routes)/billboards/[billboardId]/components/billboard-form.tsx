@@ -52,7 +52,7 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
     try {
       setLoading(true);
       if (initialData) {
-        await fetch(`/api/${params.storeId}/billboards/${params.billboadId}`, {
+        await fetch(`/api/${params.storeId}/billboards/${params.billboardId}`, {
           method: "PATCH",
           body: JSON.stringify(data),
         });
@@ -63,7 +63,7 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
         body: JSON.stringify(data),
       });
       router.refresh();
-      router.push(`${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);
     } catch (error: any) {
       toast.error(error.message);
@@ -81,7 +81,7 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
         method: "DELETE",
       });
       router.refresh();
-      router.push("/");
+      router.push(`/${params.storeId}/billboards`);
       toast.success("Billboard deleted successfully");
     } catch (error) {
       toast.error(
@@ -162,7 +162,6 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
           </Button>
         </form>
       </Form>
-      <Separator />
     </>
   );
 };
