@@ -53,7 +53,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
         loading={loading}
       />
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger>
           <Button variant="ghost" className="h-7 w-7 p-0">
             <span className="sr-only">Open Menu</span>
             <MoreHorizontal className="h-4 w-4 rotate-90" />

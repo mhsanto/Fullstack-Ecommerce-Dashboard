@@ -21,6 +21,11 @@ const MainNav = ({
       isActive: pathName === `/${params.storeId}/billboards`,
     },
     {
+      href: `/${params.storeId}/categories`,
+      label: "Categories",
+      isActive: pathName === `/${params.storeId}/categories`,
+    },
+    {
       href: `/${params.storeId}/settings`,
       label: "Settings",
       isActive: pathName === `/${params.storeId}/settings`,
