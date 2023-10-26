@@ -5,24 +5,24 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
-import { CategoryColumn, columns } from "./columns";
+import { SizeColumns, columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
 import ApiList from "@/components/ui/api-list";
-type CategoryClientProps = {
-  data: CategoryColumn[];
+type SizeClientProps = {
+  data: SizeColumns[];
 };
-const Client: React.FC<CategoryClientProps> = ({ data }) => {
+const SizeClients: React.FC<SizeClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
   return (
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Categories (${data?.length})`}
-          description="Manage your categories"
+          title={`Sizes (${data?.length})`}
+          description="Manage your Sizes"
         />
         <Button
-          onClick={() => router.push(`/${params.storeId}/categories/5f898a0b69ca9a0ea56d0a11`)}
+          onClick={() => router.push(`/${params.storeId}/sizes/5f898a0b69ca9a0ea56d0a11`)}
         >
           <Plus className="mr-2 h-4 w-4" />
           Add new
@@ -31,11 +31,11 @@ const Client: React.FC<CategoryClientProps> = ({ data }) => {
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
       <Separator />
-      <Heading title="Api" description="Api calls for categories" />
+      <Heading title="Api" description="Api calls for Sizes" />
       <Separator />
-      <ApiList entityName="categories" entityIdName="categoryId"/>
+      <ApiList entityName="sizes" entityIdName="sizesId"/>
     </>
   );
 };
 
-export default Client;
+export default SizeClients;
