@@ -6,9 +6,9 @@ const CategoryPage = async ({
 }: {
   params: { categoryId: string; storeId: string };
 }) => {
-  const category = await prismaDB.category.findFirst({
+  const category = await prismaDB.category.findUnique({
     where: {
-      name: categoryId,
+      id: categoryId,
     },
   });
   const billboards = await prismaDB.billboard.findMany({

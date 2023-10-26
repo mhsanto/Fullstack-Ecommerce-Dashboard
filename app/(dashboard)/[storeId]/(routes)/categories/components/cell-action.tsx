@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { BillboardColumns } from "./columns";
+import { CategoryColumn } from "./columns";
 import {
   DropdownMenuTrigger,
   DropdownMenu,
@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/alert-model";
 interface CellActionProps {
-  data: BillboardColumns;
+  data: CategoryColumn;
 }
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -24,20 +24,20 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams();
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Billboard Id copied to clipboard");
+    toast.success("Category Id copied to clipboard");
   };
   //delete store
   const onDelete = async () => {
     try {
       setLoading(true);
-      await fetch(`/api/${params.storeId}/billboards/${data.id}`, {
+      await fetch(`/api/${params.storeId}/categories/${data.id}`, {
         method: "DELETE",
       });
       router.refresh();
-      toast.success("Billboard deleted successfully");
+      toast.success("Category deleted successfully");
     } catch (error) {
       toast.error(
-        "Make sure you have deleted all the categories using this billboard first"
+        "Make sure you have deleted all the categories using this Category first"
       );
     } finally {
       setOpen(false);
@@ -48,12 +48,12 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
     <>
       <AlertModal
         isOpen={open}
-        onClose={() => setOpen(false)}
+        onClose={ () => setOpen(false)}
         onConfirm={onDelete}
         loading={loading}
       />
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="h-7 w-7 p-0">
             <span className="sr-only">Open Menu</span>
             <MoreHorizontal className="h-4 w-4 rotate-90" />
@@ -68,7 +68,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/categories/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />

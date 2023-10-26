@@ -56,12 +56,13 @@ const BillboardsForm: React.FC<BillboardsFormProps> = ({ initialData }) => {
           method: "PATCH",
           body: JSON.stringify(data),
         });
+      } else {
+        await fetch(`/api/${params.storeId}/billboards`, {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
       }
 
-      await fetch(`/api/${params.storeId}/billboards`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
       router.refresh();
       router.push(`/${params.storeId}/billboards`);
       toast.success(toastMessage);

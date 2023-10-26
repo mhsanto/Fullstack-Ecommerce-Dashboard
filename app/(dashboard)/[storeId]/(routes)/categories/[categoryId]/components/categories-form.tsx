@@ -62,16 +62,16 @@ const CategoriesForm: React.FC<CategoriesFormProps> = ({
     try {
       setLoading(true);
       if (initialData) {
-        await fetch(`/api/${params.storeId}/categories/${params.billboardId}`, {
+        await fetch(`/api/${params.storeId}/categories/${params.categoryId}`, {
           method: "PATCH",
           body: JSON.stringify(data),
         });
+      }else{
+        await fetch(`/api/${params.storeId}/categories`, {
+          method: "POST",
+          body: JSON.stringify(data),
+        });
       }
-
-      await fetch(`/api/${params.storeId}/categories`, {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
       router.refresh();
       router.push(`/${params.storeId}/categories`);
       toast.success(toastMessage);
