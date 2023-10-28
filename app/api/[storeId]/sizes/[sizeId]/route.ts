@@ -1,27 +1,27 @@
 import prismaDB from "@/lib/prismaDB";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-//get billboards
+//get sizes
 export async function GET(
   request: Request,
-  { params: { billboardId } }: { params: { billboardId: string } }
+  { params: { sizeId } }: { params: { sizeId: string } }
 ) {
   try {
-    const billboard = await prismaDB.billboard.findUnique({
-      where: { id: billboardId },
+    const size = await prismaDB.size.findUnique({
+      where: { id: sizeId },
     });
-    return NextResponse.json(billboard);
+    return NextResponse.json(size);
   } catch (error) {
-    console.log("[billboardId-GET]", error);
+    console.log("[sizeId-GET]", error);
     return new NextResponse("Server Error", { status: 500 });
   }
 }
-//delete billboard api
+//delete size api
 export async function DELETE(
   request: Request,
   {
-    params: { storeId, billboardId },
-  }: { params: { storeId: string; billboardId: string } }
+    params: { storeId, sizeId },
+  }: { params: { storeId: string; sizeId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -31,8 +31,8 @@ export async function DELETE(
     if (!storeId) {
       return new NextResponse("Store Id is required", { status: 400 });
     }
-    if (!billboardId) {
-      return new NextResponse("Billboard Id is required", { status: 400 });
+    if (!sizeId) {
+      return new NextResponse("size Id is required", { status: 400 });
     }
     const storeById = await prismaDB.store.findFirst({
       where: {
@@ -43,30 +43,26 @@ export async function DELETE(
     if (!storeById) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
-    const billboard = await prismaDB.billboard.deleteMany({
-      where: { id: billboardId },
+    const size = await prismaDB.size.deleteMany({
+      where: { id: sizeId },
     });
-    return NextResponse.json(billboard);
+    return NextResponse.json(size);
   } catch (error) {
-    console.log("[billboardId-DELETE]", error);
+    console.log("[sizeId-DELETE]", error);
     return new NextResponse("Server Error", { status: 500 });
   }
 }
+//update size api
 export async function PATCH(
   request: Request,
   {
-    params: { storeId, billboardId },
-  }: { params: { storeId: string; billboardId: string } }
+    params: { storeId, sizeId },
+  }: { params: { storeId: string; sizeId: string } }
 ) {
   try {
     const body = await request.json();
-    const { label, imageUrl } = body;
-    if (!label) {
-      return new NextResponse("Name is required", { status: 400 });
-    }
-    if (!imageUrl) {
-      return new NextResponse("Image URL is required", { status: 400 });
-    }
+    const { name, value } = body;
+
     const { userId } = auth();
     if (!userId) {
       return new NextResponse("Unauthorized", { status: 401 });
@@ -74,7 +70,12 @@ export async function PATCH(
     if (!storeId) {
       return new NextResponse("Store Id is required", { status: 400 });
     }
-
+    if (!name) {
+      return new NextResponse("name is required", { status: 400 });
+    }
+    if (!value) {
+      return new NextResponse("Value is required", { status: 400 });
+    }
     const storeById = await prismaDB.store.findFirst({
       where: {
         id: storeId,
@@ -84,13 +85,13 @@ export async function PATCH(
     if (!storeById) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
-    const billboard = await prismaDB.billboard.updateMany({
-      where: { id: billboardId },
-      data: { label, imageUrl },
+    const sizes = await prismaDB.size.updateMany({
+      where: { id: sizeId },
+      data: { name, value },
     });
-    return NextResponse.json(billboard);
+    return NextResponse.json(sizes);
   } catch (error) {
-    console.log("[billboardId-patch]", error);
+    console.log("[sizeId-patch]", error);
     return new NextResponse("Server Error", { status: 500 });
   }
 }

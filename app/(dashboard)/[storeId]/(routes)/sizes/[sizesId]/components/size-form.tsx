@@ -23,8 +23,8 @@ import AlertModal from "@/components/modals/alert-model";
 import ImageUpload from "@/components/ui/image-upload";
 //zod schema validation
 const formSchema = z.object({
-  name: z.string().min(3),
-  value: z.string().min(3),
+  name: z.string().min(1),
+  value: z.string().min(1),
 });
 type SizesFormValues = z.infer<typeof formSchema>;
 

@@ -23,7 +23,7 @@ import AlertModal from "@/components/modals/alert-model";
 import ApiAlert from "@/components/ui/api-alert";
 import useOrigin from "@/hooks/useOrigin";
 const formSchema = z.object({
-  name: z.string().min(3).max(255),
+  name: z.string().min(1).max(255),
 });
 type SettingFormValues = z.infer<typeof formSchema>;
 

@@ -23,8 +23,8 @@ import AlertModal from "@/components/modals/alert-model";
 import ImageUpload from "@/components/ui/image-upload";
 //zod schema validation
 const formSchema = z.object({
-  label: z.string().min(3).max(255),
-  imageUrl: z.string().min(3),
+  label: z.string().min(1).max(255),
+  imageUrl: z.string().min(1),
 });
 type BillboardFormValues = z.infer<typeof formSchema>;
 

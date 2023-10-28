@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { SizeColumns } from "./columns";
+import { ColorColumns } from "./columns";
 import {
   DropdownMenuTrigger,
   DropdownMenu,
@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/alert-model";
 interface CellActionProps {
-  data: SizeColumns;
+  data: ColorColumns;
 }
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -24,20 +24,20 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams();
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Size Id copied to clipboard");
+    toast.success("color Id copied to clipboard");
   };
   //delete store
   const onDelete = async () => {
     try {
       setLoading(true);
-      await fetch(`/api/${params.storeId}/sizes/${data.id}`, {
+      await fetch(`/api/${params.storeId}/colors/${data.id}`, {
         method: "DELETE",
       });
       router.refresh();
-      toast.success("size deleted successfully");
+      toast.success("color deleted successfully");
     } catch (error) {
       toast.error(
-        "Make sure you have deleted all the products using this size first"
+        "Make sure you have deleted all the products using this color first"
       );
     } finally {
       setOpen(false);
@@ -68,7 +68,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/sizes/${data.id}`)
+              router.push(`/${params.storeId}/colors/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />
