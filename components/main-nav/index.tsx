@@ -32,7 +32,7 @@ const MainNav = ({
     },
     {
       href: `/${params.storeId}/colors`,
-      label: "colors",
+      label: "Colors",
       isActive: pathName === `/${params.storeId}/colors`,
     },
     {
