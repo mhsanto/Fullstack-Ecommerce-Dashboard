@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { BillboardColumns } from "./columns";
+import { ProductColumns } from "./columns";
 import {
   DropdownMenuTrigger,
   DropdownMenu,
@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/alert-model";
 interface CellActionProps {
-  data: BillboardColumns;
+  data: ProductColumns;
 }
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
