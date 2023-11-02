@@ -1,5 +1,6 @@
 import prismaDB from "@/lib/prismaDB";
 import { auth } from "@clerk/nextjs";
+import { CldOgImage } from "next-cloudinary";
 import { NextResponse } from "next/server";
 
 export async function POST(
@@ -10,15 +11,36 @@ export async function POST(
     const { userId } = auth();
     const body = await req.json();
 
-    const { label, imageUrl } = body;
+    const {
+      name,
+      images,
+      sizeId,
+      categoryId,
+      price,
+      colorId,
+      isArchived,
+      isFeatured,
+    } = body;
     if (!userId) {
       return new NextResponse("Unauthenticated ", { status: 401 });
     }
-    if (!label) {
+    if (!name) {
       return new NextResponse("Missing name", { status: 400 });
     }
-    if (!imageUrl) {
-      return new NextResponse("Missing Image", { status: 400 });
+    if (!images || images.length === 0) {
+      return new NextResponse("Missing images", { status: 400 });
+    }
+    if (!sizeId) {
+      return new NextResponse("Missing Size", { status: 400 });
+    }
+    if (!categoryId) {
+      return new NextResponse("Missing Category", { status: 400 });
+    }
+    if (!colorId) {
+      return new NextResponse("Missing Color", { status: 400 });
+    }
+    if (!price) {
+      return new NextResponse("Missing Price", { status: 400 });
     }
     if (!storeId) {
       return new NextResponse("Missing Store Id", { status: 400 });
@@ -32,35 +54,66 @@ export async function POST(
     if (!storeById) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
-    const billboard = await prismaDB.billboard.create({
+    const product = await prismaDB.product.create({
       data: {
-        label,
-        imageUrl,
+        name,
+        sizeId,
+        categoryId,
+        price,
+        colorId,
+        isArchived,
+        isFeatured,
         storeId,
+        images: {
+          createMany: {
+            data: [...images.map((image: { url: string }) => image)],
+          },
+        },
       },
     });
-    return NextResponse.json(billboard);
+    return NextResponse.json(product);
   } catch (error) {
-    console.log(`[Billboard_POST]`, error);
+    console.log(`[product_POST]`, error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
-//get billboards
+//get products
 
 export async function GET(
   req: Request,
   { params: { storeId } }: { params: { storeId: string } }
 ) {
   try {
-  
-    const billboards = await prismaDB.billboard.findMany({
+    const { searchParams } = new URL(req.url);
+    const categoryId = searchParams.get("categoryId") || undefined;
+    const sizeId = searchParams.get("sizeId") || undefined;
+    const colorId = searchParams.get("colorId") || undefined;
+    const isFeatured = searchParams.get("isFeatured") || undefined;
+
+    const products = await prismaDB.product.findMany({
       where: {
         storeId,
+        categoryId,
+        sizeId,
+        colorId,
+        isFeatured: isFeatured ? true : undefined,
+        isArchived: false,
+      },
+      include: {
+        images: true,
+        category: true,
+        size: true,
+        color: true,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
-    return NextResponse.json(billboards);
+    console.log(products)
+    return NextResponse.json(products);
+    
   } catch (error) {
-    console.log(`[Billboard_GET]`, error);
+    console.log(`[product_GET]`, error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
