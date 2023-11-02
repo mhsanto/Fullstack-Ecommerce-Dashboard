@@ -226,6 +226,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   <FormLabel>Category</FormLabel>
                   <FormControl>
                     <Select
+                      required
                       disabled={loading}
                       onValueChange={field.onChange}
                       value={field.value}
@@ -260,6 +261,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   <FormLabel>Color</FormLabel>
                   <FormControl>
                     <Select
+                      required
                       disabled={loading}
                       onValueChange={field.onChange}
                       value={field.value}
@@ -294,6 +296,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                   <FormLabel>Sizes</FormLabel>
                   <FormControl>
                     <Select
+                      required
                       disabled={loading}
                       onValueChange={field.onChange}
                       value={field.value}

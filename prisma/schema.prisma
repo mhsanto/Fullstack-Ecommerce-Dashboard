@@ -20,6 +20,7 @@ model Store {
   sizes      Size[]      @relation("StoreToSize")
   colors     Color[]     @relation("StoreToColor")
   products   Product[]   @relation("StoreToProduct")
+  orders     Order[]     @relation("StoreToOrder")
   createdAt  DateTime    @default(now())
   updatedAt  DateTime    @updatedAt
 }
@@ -83,8 +84,11 @@ model Product {
   sizeId     String   @db.ObjectId
   size       Size     @relation(fields: [sizeId], references: [id])
   colorId    String @db.ObjectId
+
   color      Color    @relation(fields: [colorId], references: [id])
+
   images     Image[]
+  orderItems OrderItem[]
   createdAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -96,4 +100,24 @@ model Image {
   url       String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+model Order{
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  storeId    String   @db.ObjectId
+  store      Store    @relation("StoreToOrder", fields: [storeId], references: [id])
+  orderItems OrderItem[]
+  isPaid Boolean @default(false)
+  phone String @default("")
+  address String @default("")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+model OrderItem{
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId    String   @db.ObjectId
+  order      Order    @relation(fields: [orderId], references: [id])
+  productId  String   @db.ObjectId
+  product    Product  @relation( fields: [productId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

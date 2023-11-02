@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-import { ProductColumns } from "./columns";
+import { BillboardColumns } from "./columns";
 import {
   DropdownMenuTrigger,
   DropdownMenu,
@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import AlertModal from "@/components/modals/alert-model";
 interface CellActionProps {
-  data: ProductColumns;
+  data: BillboardColumns;
 }
 const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
@@ -24,20 +24,20 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const params = useParams();
   const onCopy = (id: string) => {
     navigator.clipboard.writeText(id);
-    toast.success("Product Id copied to clipboard");
+    toast.success("Billboard Id copied to clipboard");
   };
   //delete store
   const onDelete = async () => {
     try {
       setLoading(true);
-      await fetch(`/api/${params.storeId}/products/${data.id}`, {
+      await fetch(`/api/${params.storeId}/billboards/${data.id}`, {
         method: "DELETE",
       });
       router.refresh();
-      toast.success("Product deleted successfully");
+      toast.success("Billboard deleted successfully");
     } catch (error) {
       toast.error(
-        "Make sure you have deleted all the items using this product first"
+        "Make sure you have deleted all the categories using this billboard first"
       );
     } finally {
       setOpen(false);
@@ -68,7 +68,7 @@ const CellAction: React.FC<CellActionProps> = ({ data }) => {
           </DropdownMenuItem>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/products/${data.id}`)
+              router.push(`/${params.storeId}/billboards/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />
