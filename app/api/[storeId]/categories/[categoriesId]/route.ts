@@ -1,14 +1,17 @@
 import prismaDB from "@/lib/prismaDB";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-//get billboards
+//get categories
 export async function GET(
   request: Request,
   { params: { categoriesId } }: { params: { categoriesId: string } }
 ) {
   try {
-    const category = await prismaDB.billboard.findUnique({
+    const category = await prismaDB.category.findUnique({
       where: { id: categoriesId },
+      include:{
+        billboard:true
+      }
     });
     return NextResponse.json(category);
   } catch (error) {
@@ -16,7 +19,7 @@ export async function GET(
     return new NextResponse("Server Error", { status: 500 });
   }
 }
-//delete billboard api
+//delete category api
 export async function DELETE(
   request: Request,
   {

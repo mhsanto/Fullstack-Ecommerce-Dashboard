@@ -41,7 +41,6 @@ const StoreModal = () => {
         body: JSON.stringify(values),
       }).then((res) => res.json());
       window.location.assign(`/${response.id}`);
-      console.log(response);
     } catch (error: any) {
       toast.error(error.message);
       console.log(`[store-modal-onSubmit]`, error);
