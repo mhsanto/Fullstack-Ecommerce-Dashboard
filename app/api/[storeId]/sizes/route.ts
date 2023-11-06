@@ -32,34 +32,34 @@ export async function POST(
     if (!storeById) {
       return new NextResponse("Unauthorized", { status: 403 });
     }
-    const color = await prismaDB.color.create({
+    const size = await prismaDB.size.create({
       data: {
         name,
         value,
         storeId,
       },
     });
-    return NextResponse.json(color);
+    return NextResponse.json(size);
   } catch (error) {
-    console.log(`[color_POST]`, error);
+    console.log(`[size_POST]`, error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
-//get colors
+//get sizes
 
 export async function GET(
   req: Request,
   { params: { storeId } }: { params: { storeId: string } }
 ) {
   try {
-    const colors = await prismaDB.color.findMany({
+    const sizes = await prismaDB.size.findMany({
       where: {
         storeId,
       },
     });
-    return NextResponse.json(colors);
+    return NextResponse.json(sizes);
   } catch (error) {
-    console.log(`[color_GET]`, error);
+    console.log(`[size_GET]`, error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
