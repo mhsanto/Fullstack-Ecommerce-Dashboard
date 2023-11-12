@@ -8,12 +8,15 @@ import prismaDB from "@/lib/prismaDB";
 import { formatter } from "@/lib/utils";
 import { CreditCard, Package } from "lucide-react";
 import React from "react";
+import OverView from "@/components/OverView";
+import { getGraphRevenue } from "@/actions/get-graph-revenue";
 
 const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
   const { storeId } = params;
   const totalRevenue = await getTotalRevenue(storeId);
   const sellsCount = await getSellsCount(storeId);
   const stockCount = await getStocksCount(storeId);
+  const getGraphData = await getGraphRevenue(storeId);
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6 ">
@@ -60,7 +63,9 @@ const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
             <CardTitle>OverView</CardTitle>
 
           </CardHeader>
-          
+          <CardContent className="pl-2">
+            <OverView data={getGraphData} />
+          </CardContent>
         </Card>
       </div>
     </div>
