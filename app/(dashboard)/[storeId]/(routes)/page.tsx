@@ -22,10 +22,10 @@ const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
       <div className="flex-1 space-y-4 p-8 pt-6 ">
         <Heading description="Overview of your store" title="Dashboard" />
         <Separator />
-        <div className="grid gap-4 grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-4 ">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-4">
-              <CardTitle className="text-sm font-medium">
+              <CardTitle className="text-sm font-medium mr-1">
                 Total Revenue
               </CardTitle>
               &#2547;
@@ -37,9 +37,9 @@ const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-4">
+            <CardHeader className="flex  items-center  justify-between space-y-4">
               <CardTitle className="text-sm font-medium">Sales</CardTitle>
-              <CreditCard className="w-4 h-4 text-muted-foreground" />
+              <CreditCard className="hidden md:block dw-4 h-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">+{sellsCount}</div>
@@ -50,7 +50,7 @@ const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
               <CardTitle className="text-sm font-medium">
                 Product In Store
               </CardTitle>
-              <Package className="w-4 h-4 text-muted-foreground" />
+              <Package className="w-4 h-4 text-muted-foreground hidden md:block" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">+{stockCount}</div>
