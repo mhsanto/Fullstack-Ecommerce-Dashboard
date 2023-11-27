@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Copy, Server } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "./alert";
 import { Badge, BadgeProps } from "./badge";
@@ -29,15 +29,15 @@ const ApiAlert: React.FC<ApiAlertProps> = ({
     toast.success("Copied to clipboard");
   };
   return (
-    <Alert>
-      <Server className="h-4 w-4" />
-      <AlertTitle>
+    <Alert className="pl-0 md:pl-3">
+      <Server className="h-4 w-4 hidden md:block pl-0" />
+      <AlertTitle className="pl-0">
         {title} <Badge variant={variantMap[variant]}>{textMap[variant]}</Badge>
       </AlertTitle>
-      <AlertDescription className="flex items-center justify-between mt-4">
-        <code className="relative rounded bg-muted px-1 py-1 font-mono text-sm font-semibold">
+      <AlertDescription className="flex items-center justify-between mt-4  ">
+        <p className="relative rounded bg-muted px-1 py-1 font-mono text-sm font-semibold  break-all">
           {description}
-        </code>
+        </p>
         <Button variant="outline" size="icon" onClick={onCopy}>
           <Copy className="h-4 w-4" />
         </Button>

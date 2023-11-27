@@ -25,7 +25,7 @@ const Billboards = async ({
   );
   return (
     <div className="flex flex-col">
-      <div className="flex-1 space-y-4 p-7 pt-7">
+      <div className="flex-1 space-y-4 p-0 md:p-7 pt-7">
         <BillboardClients data={formattedBillboards} />
       </div>
     </div>

@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Hamburger from "./hamburger";
 
 const MainNav = ({
@@ -17,6 +17,7 @@ const MainNav = ({
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
+
   const routes = [
     {
       href: `/${params.storeId}`,
@@ -65,8 +66,9 @@ const MainNav = ({
 
       <nav
         className={cn(
-          "flex  md:flex-row   absolute md:static  top-[64px] left-0 dark:bg-slate-900 bg-slate-100 md:bg-transparent  right-0  w-full md:w-auto items-center md:-space-x-3.5 lg:space-x-6 md:pl-5 z-20",
+          "flex  md:flex-row md:gap-6 absolute md:static  top-[64px] left-0 dark:bg-slate-900 bg-slate-100 md:bg-transparent  right-0  w-full md:w-auto items-center md:-space-x-3.5 lg:space-x-6 md:pl-5 z-20",
           isOpen ? "flex-col" : "hidden",
+
           className
         )}
       >
@@ -75,7 +77,7 @@ const MainNav = ({
             href={route.href}
             key={route.href}
             className={cn(
-              "md:text-sm font-medium transition-colors hover:text-primary text-lg py-3 dark:hover:bg-slate-300 hover:bg-slate-500 w-full hover:text-white  dark:hover:text-black text-center",
+              "w-full md:text-sm font-medium transition-colors  text-lg py-3 dark:hover:bg-slate-300 hover:bg-slate-500 md:hover:text-primary  hover:text-white md:hover:bg-transparent dark:hover:text-black text-center" ,
               route.isActive
                 ? "text-black dark:text-white "
                 : "text-muted-foreground"

@@ -99,7 +99,7 @@ const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-8 w-full"
         >
-          <div className="grid grid-cols-3 gap-8">
+          <div className="flex flex-wrap gap-8">
             <FormField
               control={form.control}
               name="name"

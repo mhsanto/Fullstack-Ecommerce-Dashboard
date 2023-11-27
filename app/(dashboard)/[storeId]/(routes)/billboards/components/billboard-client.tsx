@@ -16,15 +16,16 @@ const BillboardClients: React.FC<BillboardClientProps> = ({ data }) => {
   const params = useParams();
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-2">
         <Heading
           title={`Billboards (${data?.length})`}
           description="Manage your billboards"
         />
         <Button
+        
           onClick={() => router.push(`/${params.storeId}/billboards/5f898a0b69ca9a0ea56d0a11`)}
         >
-          <Plus className="mr-2 h-4 w-4" />
+          <Plus className="mr-2 h-4 w-4 hidden md:block" />
           Add new
         </Button>
       </div>

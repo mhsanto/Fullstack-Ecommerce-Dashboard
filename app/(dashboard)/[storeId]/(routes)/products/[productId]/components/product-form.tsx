@@ -182,7 +182,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
               </FormItem>
             )}
           />
-          <div className="grid grid-cols-3 gap-8">
+          <div className="flex flex-wrap gap-8">
             <FormField
               control={form.control}
               name="name"
