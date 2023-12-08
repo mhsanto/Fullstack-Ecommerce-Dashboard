@@ -2,7 +2,10 @@ type HamburgerProps = {
   handleClick: () => void;
   isOpen: boolean;
 };
-const Hamburger:React.FC<HamburgerProps> = ({handleClick,isOpen}) => {
+const Hamburger: React.FC<HamburgerProps> = ({
+  handleClick,
+  isOpen = false,
+}) => {
   return (
     <button
       onClick={handleClick}
