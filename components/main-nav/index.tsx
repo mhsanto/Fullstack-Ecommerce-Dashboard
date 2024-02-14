@@ -2,9 +2,16 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import Hamburger from "./hamburger";
-import useDeviceWidth from "@/hooks/useDeviceWidth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { HammerIcon, Menu } from "lucide-react";
+import MobileNav from "./mobile-nav";
 
 const MainNav = ({
   className,
@@ -12,21 +19,7 @@ const MainNav = ({
 }: React.HTMLAttributes<HTMLElement>) => {
   const pathName = usePathname();
   const params = useParams();
-  const [isOpen, setIsOpen] = useState(true);
-  const deviceWidth = useDeviceWidth();
-  const isMobile = deviceWidth < 768;
-  //Handles the opening and closing of our nav
-  const handleClick = () => {
-    setIsOpen(!isOpen);
-  };
-  useEffect(() => {
-    if (isMobile) {
-      setIsOpen(false);
-    } else {
-      setIsOpen(true);
-    }
-  }, [isMobile]);
-  console.log(isMobile);
+
   const routes = [
     {
       href: `/${params.storeId}`,
@@ -71,13 +64,23 @@ const MainNav = ({
   ];
   return (
     <>
-      <Hamburger handleClick={handleClick} isOpen={isOpen} />
-
+      <div className="flex w-full justify-end pr-2">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex md:hidden">
+            <Menu className="h-6 w-6" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Nav Menus</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            {routes.map((route) => (
+              <MobileNav key={route.href} route={route} />
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
       <nav
         className={cn(
-          "flex  md:flex-row md:gap-6 md:text-xs lg:text-sm absolute md:static  top-[64px] left-0 dark:md:bg-transparent dark:bg-slate-900 bg-slate-100 md:bg-transparent  right-0  w-full md:w-auto items-center md:-space-x-3.5 md:pl-5 z-20",
-          isOpen ? "flex-col" : "hidden",
-
+          "flex gap-5 text-sm justify-start items-center md:-space-x-3.5  w-fit pr-4",
           className
         )}
         {...props}
@@ -87,14 +90,10 @@ const MainNav = ({
             href={route.href}
             key={route.href}
             className={cn(
-              isMobile
-                ? "hover:bg-slate-300  dark:hover:text-black hover:text-black"
-                : "hover:text-white hover:bg-none  md:hover:text-gray-800 dark:md:hover:text-slate-300 ",
-
               route.isActive
-                ? "text-black dark:text-white "
+                ? "text-black dark:text-white font-medium"
                 : "text-muted-foreground",
-              "w-full md:text-sm font-medium bg-none transition-colors  text-lg py-3 text-center"
+              "hidden md:flex hover:text-black"
             )}
           >
             {route.label}
@@ -104,5 +103,7 @@ const MainNav = ({
     </>
   );
 };
-
+{
+  /* <DropdownMenuItem>Profile</DropdownMenuItem> */
+}
 export default MainNav;
