@@ -37,7 +37,7 @@ const DashboardPage = async ({ params }: { params: { storeId: string } }) => {
             </CardContent>
           </Card>
           <Card>
-            <CardHeader className="flex  items-center  justify-between space-y-4">
+            <CardHeader className="flex flex-row items-center justify-between space-y-4">
               <CardTitle className="text-sm font-medium">Sales</CardTitle>
               <CreditCard className="hidden md:block dw-4 h-4 text-muted-foreground" />
             </CardHeader>

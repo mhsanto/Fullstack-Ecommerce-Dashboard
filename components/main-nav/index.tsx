@@ -26,6 +26,7 @@ const MainNav = ({
       setIsOpen(true);
     }
   }, [isMobile]);
+  console.log(isMobile);
   const routes = [
     {
       href: `/${params.storeId}`,
@@ -86,14 +87,14 @@ const MainNav = ({
             href={route.href}
             key={route.href}
             className={cn(
-              "w-full md:text-sm font-medium bg-transparent transition-colors  text-lg py-3    text-center",
               isMobile
                 ? "hover:bg-slate-300  dark:hover:text-black hover:text-black"
-                : "hover:text-white  md:hover:text-gray-800 dark:md:hover:text-slate-300 ",
+                : "hover:text-white hover:bg-none  md:hover:text-gray-800 dark:md:hover:text-slate-300 ",
 
               route.isActive
                 ? "text-black dark:text-white "
-                : "text-muted-foreground"
+                : "text-muted-foreground",
+              "w-full md:text-sm font-medium bg-none transition-colors  text-lg py-3 text-center"
             )}
           >
             {route.label}

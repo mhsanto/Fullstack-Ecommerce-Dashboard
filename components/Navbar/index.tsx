@@ -21,7 +21,7 @@ const Navbar = async () => {
         <MainNav />
         <div className="ml-auto flex  items-center space-x-4">
           <ThemeToggle />
-          <div className="ml-3 pl-5 md:hidden"/>
+          <div className="ml-3 pl-5 md:hidden" />
           <div className="hidden md:flex">
             <UserButton afterSignOutUrl="/" />
           </div>

@@ -29,7 +29,7 @@ export async function getGraphRevenue(storeId: string) {
     { name: "Jan", total: 0 },
     { name: "Feb", total: 0 },
     { name: "Mar", total: 0 },
-    { name: "Apr", total: 0 },
+    { name: "Apr", total: 5000 },
     { name: "May", total: 0 },
     { name: "Jun", total: 0 },
     { name: "Jul", total: 0 },
@@ -37,7 +37,7 @@ export async function getGraphRevenue(storeId: string) {
     { name: "Sep", total: 0 },
     { name: "Oct", total: 0 },
     { name: "Nov", total: 0 },
-    { name: "Dec", total: 0 },
+    { name: "Dec", total: 300 },
   ];
   for (const month in monthlyRevenue) {
     graphData[parseInt(month)].total = monthlyRevenue[parseInt(month)];
