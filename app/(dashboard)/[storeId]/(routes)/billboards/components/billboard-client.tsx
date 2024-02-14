@@ -22,11 +22,14 @@ const BillboardClients: React.FC<BillboardClientProps> = ({ data }) => {
           description="Manage your billboards"
         />
         <Button
-        
-          onClick={() => router.push(`/${params.storeId}/billboards/5f898a0b69ca9a0ea56d0a11`)}
+          onClick={() =>
+            router.push(
+              `/${params.storeId}/billboards/5f898a0b69ca9a0ea56d0a11`
+            )
+          }
         >
-          <Plus className="mr-2 h-4 w-4 hidden md:block" />
-          Add new
+          <Plus className=" h-4 w-4" />
+          <span className="hidden sm:block">Add new</span>
         </Button>
       </div>
       <Separator />
@@ -34,7 +37,7 @@ const BillboardClients: React.FC<BillboardClientProps> = ({ data }) => {
       <Separator />
       <Heading title="Api" description="Api calls for billboard" />
       <Separator />
-      <ApiList entityName="billboards" entityIdName="billboardId"/>
+      <ApiList entityName="billboards" entityIdName="billboardId" />
     </>
   );
 };

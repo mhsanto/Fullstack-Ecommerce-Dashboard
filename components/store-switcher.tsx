@@ -57,7 +57,9 @@ const StoreSwitcher = ({ className, items }: StoreSwitcherProps) => {
           aria-label="Select a Store"
         >
           <StoreIcon className="mr-2 h-4 w-4" />
-          {currentStore?.label || "Select a store"}
+          <span className="line-clamp-1">
+            {currentStore?.label || "Select a store"}
+          </span>
           <ChevronsUpDown className="w-4 h-4 shrink-0 opacity-80" />
         </Button>
       </PopoverTrigger>

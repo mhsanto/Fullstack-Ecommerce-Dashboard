@@ -22,10 +22,13 @@ const ColorClients: React.FC<ColorClientProps> = ({ data }) => {
           description="Manage your Colors"
         />
         <Button
-          onClick={() => router.push(`/${params.storeId}/colors/5f898a0b69ca9a0ea56d0a11`)}
+          onClick={() =>
+            router.push(`/${params.storeId}/colors/5f898a0b69ca9a0ea56d0a11`)
+          }
+          className="flex gap-2 self-end"
         >
-          <Plus className="mr-2 h-4 w-4" />
-          Add new
+          <Plus className=" h-4 w-4" />
+          <span className="hidden sm:block">Add new</span>
         </Button>
       </div>
       <Separator />
@@ -33,7 +36,7 @@ const ColorClients: React.FC<ColorClientProps> = ({ data }) => {
       <Separator />
       <Heading title="Api" description="Api calls for Colors" />
       <Separator />
-      <ApiList entityName="colors" entityIdName="colorsId"/>
+      <ApiList entityName="colors" entityIdName="colorsId" />
     </>
   );
 };

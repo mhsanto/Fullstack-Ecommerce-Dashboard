@@ -22,10 +22,13 @@ const SizeClients: React.FC<SizeClientProps> = ({ data }) => {
           description="Manage your Sizes"
         />
         <Button
-          onClick={() => router.push(`/${params.storeId}/sizes/5f898a0b69ca9a0ea56d0a11`)}
+          onClick={() =>
+            router.push(`/${params.storeId}/sizes/5f898a0b69ca9a0ea56d0a11`)
+          }
+          className="flex gap-2 self-end"
         >
-          <Plus className="mr-2 h-4 w-4" />
-          Add new
+          <Plus className=" h-4 w-4" />
+          <span className="hidden sm:block">Add new</span>
         </Button>
       </div>
       <Separator />
@@ -33,7 +36,7 @@ const SizeClients: React.FC<SizeClientProps> = ({ data }) => {
       <Separator />
       <Heading title="Api" description="Api calls for Sizes" />
       <Separator />
-      <ApiList entityName="sizes" entityIdName="sizesId"/>
+      <ApiList entityName="sizes" entityIdName="sizesId" />
     </>
   );
 };

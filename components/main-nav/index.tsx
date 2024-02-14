@@ -64,7 +64,7 @@ const MainNav = ({
   ];
   return (
     <>
-      <div className="flex w-full justify-end pr-2">
+      <div className="flex w-full justify-end">
         <DropdownMenu>
           <DropdownMenuTrigger className="flex md:hidden">
             <Menu className="h-6 w-6" />

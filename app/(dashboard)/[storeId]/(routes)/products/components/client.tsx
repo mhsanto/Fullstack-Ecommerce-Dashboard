@@ -22,10 +22,13 @@ const ProductClients: React.FC<ProductClientProps> = ({ data }) => {
           description="Manage your products"
         />
         <Button
-          onClick={() => router.push(`/${params.storeId}/products/5f898a0b69ca9a0ea56d0a11`)}
+          onClick={() =>
+            router.push(`/${params.storeId}/products/5f898a0b69ca9a0ea56d0a11`)
+          }
+          className="flex gap-2 self-end"
         >
-          <Plus className="mr-2 h-4 w-4" />
-          Add new
+          <Plus className=" h-4 w-4" />
+          <span className="hidden sm:block">Add new</span>
         </Button>
       </div>
       <Separator />
@@ -33,7 +36,7 @@ const ProductClients: React.FC<ProductClientProps> = ({ data }) => {
       <Separator />
       <Heading title="Api" description="Api calls for product" />
       <Separator />
-      <ApiList entityName="products" entityIdName="productId"/>
+      <ApiList entityName="products" entityIdName="productId" />
     </>
   );
 };
